@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ubivashka.limbo.ProxyLimbo</groupId>
+        <artifactId>main</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>bungee</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <configuration.library.version>3.0.4</configuration.library.version>
+        <bungeecord.version>1.19-R0.1-SNAPSHOT</bungeecord.version>
+        <bungeecord.proxy.version>-12e4514813-1</bungeecord.proxy.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>bungeecord-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>${bungeecord.version}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>${bungeecord.version}</version>
+            <type>javadoc</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.SpigotMC.BungeeCord</groupId>
+            <artifactId>bungeecord-proxy</artifactId>
+            <version>${bungeecord.proxy.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.U61vashka.ConfigurationLibrary</groupId>
+            <artifactId>core</artifactId>
+            <version>${configuration.library.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.U61vashka.ConfigurationLibrary</groupId>
+            <artifactId>bungee</artifactId>
+            <version>${configuration.library.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ubivashka.limbo.ProxyLimbo</groupId>
+            <artifactId>core</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+    </dependencies>
+</project>

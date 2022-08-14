@@ -1,0 +1,6 @@
+name: ProxyLimbo
+main: com.ubivashka.limbo.bungee.BungeeProxyLimbo
+version: 1.0.0
+depends: [Protocolize]
+commands:
+  test:
