@@ -1,6 +1,7 @@
 package com.ubivashka.limbo.protocol.nbt.registry.chat;
 
 import com.ubivashka.limbo.protocol.nbt.ValueRegistry;
+import com.ubivashka.limbo.protocol.nbt.ValueRegistry.RegistryEntry;
 import com.ubivashka.limbo.protocol.nbt.registry.chat.ChatRegistry.ChatRegistryEntry;
 
 public class ChatRegistry extends ValueRegistry<ChatRegistryEntry> {

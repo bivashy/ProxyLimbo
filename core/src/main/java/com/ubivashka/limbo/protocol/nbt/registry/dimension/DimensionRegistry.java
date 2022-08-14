@@ -1,8 +1,8 @@
 package com.ubivashka.limbo.protocol.nbt.registry.dimension;
 
 import com.ubivashka.limbo.protocol.nbt.ValueRegistry;
+import com.ubivashka.limbo.protocol.nbt.ValueRegistry.RegistryEntry;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.DimensionRegistry.DimensionRegistryEntry;
-
 
 public class DimensionRegistry extends ValueRegistry<DimensionRegistryEntry> {
     public static final String TYPE = "minecraft:dimension_type";
