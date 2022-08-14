@@ -58,7 +58,7 @@ public class SimpleCompoundTagDataResolver extends AbstractCompoundTagDataResolv
                     collection = collection.stream().map(collectionObject -> SimpleTagFactory.getFactory(dataType.getId()).createTag(collectionObject, context)).collect(
                             Collectors.toList());
 
-                return new ListTag<>(dataType.getTagClass(), collection);
+                return new ListTag(dataType.getTagClass(), collection);
             }
             throw new IllegalStateException("Cannot resolve object " + object.getClass().getSimpleName() + ",field name " + context.getField().getName() + ", value " + object);
         });
