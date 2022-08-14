@@ -1,6 +1,5 @@
 package com.ubivashka.limbo.protocol.nbt.registry.biome;
 
-
 import com.ubivashka.limbo.protocol.nbt.ValueRegistry;
 import com.ubivashka.limbo.protocol.nbt.registry.biome.BiomeRegistry.BiomeRegistryEntry;
 

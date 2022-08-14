@@ -31,7 +31,6 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.protocol.packet.KeepAlive;
 
 public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
-    private static final String DIMENSION_NAME = "limbo";
     private final SimpleCompoundTagDataResolver compoundTagDataResolver = new SimpleCompoundTagDataResolver();
     private final Container<LimboServer> limboServerContainer = new SetContainer<>();
     private final Map<UUID, LimboPlayer> limboPlayers = new HashMap<>();
