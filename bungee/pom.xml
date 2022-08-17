@@ -79,11 +79,5 @@
             <artifactId>core</artifactId>
             <version>${core.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.ubivashka</groupId>
-            <artifactId>MinecraftTestBot</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
