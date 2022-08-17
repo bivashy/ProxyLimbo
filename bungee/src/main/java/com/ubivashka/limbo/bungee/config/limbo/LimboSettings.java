@@ -9,6 +9,7 @@ import com.ubivashka.limbo.bungee.config.PluginConfig;
 import com.ubivashka.limbo.bungee.config.limbo.biome.BiomeSettings;
 import com.ubivashka.limbo.bungee.config.limbo.dimension.DimensionSettings;
 import com.ubivashka.limbo.bungee.server.BungeeLimboServer;
+import com.ubivashka.limbo.bungee.server.BungeeLimboServerBuilder;
 import com.ubivashka.limbo.protocol.nbt.registry.biome.Biome.Category;
 import com.ubivashka.limbo.protocol.nbt.registry.biome.Biome.Type;
 import com.ubivashka.limbo.protocol.nbt.registry.biome.BiomeRegistry;
@@ -48,7 +49,7 @@ public class LimboSettings implements ConfigurationHolder {
 
         this.name = sectionHolder.key();
         dimensionCodec = new DimensionCodec(dimensionRegistry, biomeRegistry, chatRegistry);
-        limboServer = new BungeeLimboServer(this);
+        limboServer = new BungeeLimboServerBuilder().withSettings(this).build();
         ProxyLimbo.instance().getLimboServerContainer().add(limboServer);
     }
 

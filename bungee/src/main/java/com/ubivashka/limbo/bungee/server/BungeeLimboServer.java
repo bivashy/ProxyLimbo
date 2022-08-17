@@ -8,15 +8,16 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.ubivashka.limbo.bungee.config.limbo.LimboSettings;
 import com.ubivashka.limbo.bungee.packet.LoginPacketBuilder;
 import com.ubivashka.limbo.bungee.packet.RespawnPacketBuilder;
 import com.ubivashka.limbo.bungee.player.BungeeLimboPlayer;
 import com.ubivashka.limbo.nbt.bungee.adapter.BungeeTagAdapter;
 import com.ubivashka.limbo.player.LimboPlayer;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.Dimension;
+import com.ubivashka.limbo.protocol.nbt.registry.dimension.Dimension.Type;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.DimensionRegistry.DimensionRegistryEntry;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.codec.DimensionCodec;
+import com.ubivashka.limbo.protocol.packet.UpdatePlayerPositionPacket;
 import com.ubivashka.limbo.server.LimboServer;
 
 import dev.simplix.protocolize.api.util.ProtocolUtil;
@@ -36,18 +37,26 @@ import net.md_5.bungee.protocol.packet.PluginMessage;
 import se.llbit.nbt.NamedTag;
 
 public class BungeeLimboServer extends ServerConnection implements LimboServer {
+    public static final String BRAND_TAG = "minecraft:brand";
     private final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(10);
     private final Map<Integer, NamedTag> dimensionCodecNBTMap = new HashMap<>();
     private final Map<Integer, NamedTag> dimensionEntryNBTMap = new HashMap<>();
     private final DimensionCodec dimensionCodec;
     private final DimensionRegistryEntry dimensionEntry;
-    private final LimboSettings limboSettings;
+    private final Dimension.Type dimensionType;
+    private final UpdatePlayerPositionPacket positionPacket;
+    private final short gamemode;
+    private final String brand;
 
-    public BungeeLimboServer(LimboSettings limboSettings) {
-        super(new ChannelWrapper(new ChannelHandlerContextWrapper(new EmbeddedChannel())), new BungeeLimboServerInfo(limboSettings.getName()));
-        this.dimensionCodec = limboSettings.getDimensionCodec();
-        this.dimensionEntry = limboSettings.getDimensionSettings().getDimensionRegistryEntry();
-        this.limboSettings = limboSettings;
+    public BungeeLimboServer(DimensionCodec dimensionCodec, DimensionRegistryEntry dimensionEntry, String name, short gamemode, String brand,
+            Type dimensionType, UpdatePlayerPositionPacket positionPacket) {
+        super(new ChannelWrapper(new ChannelHandlerContextWrapper(new EmbeddedChannel())), new BungeeLimboServerInfo(name));
+        this.dimensionCodec = dimensionCodec;
+        this.dimensionEntry = dimensionEntry;
+        this.dimensionType = dimensionType;
+        this.positionPacket = positionPacket;
+        this.gamemode = gamemode;
+        this.brand = brand;
     }
 
     @Override
@@ -78,8 +87,7 @@ public class BungeeLimboServer extends ServerConnection implements LimboServer {
             if (protocolVersion >= ProtocolVersions.MINECRAFT_1_19)
                 dimensionObject = dimensionName;
             if (protocolVersion < ProtocolVersions.MINECRAFT_1_16)
-                dimensionObject = limboSettings.getDimensionSettings().getType().getDimensionId();
-            short gamemode = (short) limboSettings.getGamemode();
+                dimensionObject = dimensionType.getDimensionId();
             player.sendPacket(new LoginPacketBuilder().withEntityId(entityId)
                     .withGamemode(gamemode)
                     .withDimensionName(dimensionName)
@@ -90,11 +98,13 @@ public class BungeeLimboServer extends ServerConnection implements LimboServer {
             if (protocolVersion >= ProtocolVersions.MINECRAFT_1_15)
                 player.sendPacket(new GameState(GameState.IMMEDIATE_RESPAWN, 1));
             player.sendPacket(new RespawnPacketBuilder().withDimension(dimensionObject).withDimensionName(dimensionName).withGamemode(gamemode).build());
-            player.sendPacket(limboSettings.getCoordinateSettings().getPlayerPositionPacket());
+            player.sendPacket(positionPacket);
 
-            ByteBuf byteBuf = Unpooled.buffer();
-            ProtocolUtil.writeString(byteBuf, limboSettings.getBrand());
-            player.sendPacket(new PluginMessage("minecraft:brand", byteBuf.array(), false));
+            if (brand != null) {
+                ByteBuf byteBuf = Unpooled.buffer();
+                ProtocolUtil.writeString(byteBuf, brand);
+                player.sendPacket(new PluginMessage(BRAND_TAG, byteBuf.array(), false));
+            }
         });
     }
 
