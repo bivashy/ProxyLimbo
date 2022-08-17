@@ -14,6 +14,7 @@
 
     <properties>
         <configuration.library.version>3.0.4</configuration.library.version>
+        <lamp.version>3.0.8</lamp.version>
         <bungeecord.version>1.19-R0.1-SNAPSHOT</bungeecord.version>
         <bungeecord.proxy.version>-12e4514813-1</bungeecord.proxy.version>
     </properties>
@@ -63,9 +64,26 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.Revxrsal.Lamp</groupId>
+            <artifactId>common</artifactId>
+            <version>${lamp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Revxrsal.Lamp</groupId>
+            <artifactId>bungee</artifactId>
+            <version>${lamp.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.ubivashka.limbo.ProxyLimbo</groupId>
             <artifactId>core</artifactId>
             <version>${core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ubivashka</groupId>
+            <artifactId>MinecraftTestBot</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

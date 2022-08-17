@@ -5,13 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 import com.ubivashka.limbo.ProxyLimbo;
+import com.ubivashka.limbo.bungee.commmand.CommandRegistry;
 import com.ubivashka.limbo.bungee.config.PluginConfig;
 import com.ubivashka.limbo.bungee.listener.LimboInteractionListener;
 import com.ubivashka.limbo.bungee.player.DefaultBungeeLimboPlayer;
+import com.ubivashka.limbo.bungee.task.LimboPlayersTask;
 import com.ubivashka.limbo.container.Container;
 import com.ubivashka.limbo.container.SetContainer;
 import com.ubivashka.limbo.nbt.resolver.CompoundTagDataResolver;
@@ -28,7 +29,6 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.protocol.packet.KeepAlive;
 
 public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
     private final SimpleCompoundTagDataResolver compoundTagDataResolver = new SimpleCompoundTagDataResolver();
@@ -45,17 +45,9 @@ public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new LimboInteractionListener(this));
         Protocolize.protocolRegistration()
                 .registerPacket(UpdatePlayerPositionPacket.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, UpdatePlayerPositionPacket.class);
-        Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(() -> {
-            for (LimboPlayer player : limboPlayers.values()) {
-                if (!player.isOnline())
-                    continue;
-                if (player.getCurrentLimbo() == null)
-                    continue;
-                if(player.isConnecting())
-                    player.setConnecting(false);
-                player.sendPacket(new KeepAlive(ThreadLocalRandom.current().nextInt()));
-            }
-        }, 5, 5, TimeUnit.SECONDS);
+
+        Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new LimboPlayersTask(this), 5, 5, TimeUnit.SECONDS);
+        new CommandRegistry(this);
     }
 
     @Override
@@ -69,7 +61,7 @@ public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
     }
 
     @Override
-    public Map<UUID,LimboPlayer> getLimboPlayers() {
+    public Map<UUID, LimboPlayer> getLimboPlayers() {
         return Collections.unmodifiableMap(limboPlayers);
     }
 
@@ -85,17 +77,14 @@ public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
 
     @Override
     public LimboPlayer fetchLimboPlayer(Object object) {
-        LimboPlayer limboPlayer = null;
         if (object instanceof LimboPlayer)
-            limboPlayer = (LimboPlayer) object;
-        if (object instanceof ProxiedPlayer)
-            limboPlayer = new DefaultBungeeLimboPlayer((ProxiedPlayer) object);
-        if (limboPlayer != null) {
-            if (limboPlayers.containsKey(limboPlayer.getUniqueId()))
-                return limboPlayers.get(limboPlayer.getUniqueId());
-            limboPlayers.put(limboPlayer.getUniqueId(), limboPlayer);
+            return (LimboPlayer) object;
+
+        if (object instanceof ProxiedPlayer) {
+            ProxiedPlayer player = (ProxiedPlayer) object;
+            return findLimboPlayer(player.getUniqueId());
         }
-        return limboPlayer;
+        return null;
     }
 
     public void removeLimboPlayer(UUID uniqueId) {

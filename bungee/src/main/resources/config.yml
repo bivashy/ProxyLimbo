@@ -28,3 +28,12 @@ limbo:
     # Server name in f3 debug screen
     brand: 'Limbo'
     gamemode: 3
+messages:
+  no-permission: '&cНедостаточно прав для этой команды!'
+  unhandled-exception: '&cПроизошла непредвиденная ошибка, сообщите администрации, если вы администрация смотрите в консоль.'
+  player-offline: '&cУказанный игрок не в сети!'
+  limbo-not-found: '&cЛимбо сервер с данным названием не найден!'
+  successfully-connected: '&aУспешная отправка в лимбо!'
+  usage: | 
+    &a/limbo send (limbo-name) (player) permission: limbo.send.other
+    &a/limbo send (limbo-name)          permission: limbo.send

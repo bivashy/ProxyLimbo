@@ -11,6 +11,7 @@ import com.ubivashka.configuration.ConfigurationProcessor;
 import com.ubivashka.configuration.annotation.ConfigField;
 import com.ubivashka.configuration.annotation.ImportantField;
 import com.ubivashka.limbo.bungee.config.limbo.LimboSettings;
+import com.ubivashka.limbo.bungee.config.message.MessagesConfiguration;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -23,6 +24,9 @@ public class PluginConfig {
     @ImportantField
     @ConfigField("limbo")
     private List<LimboSettings> limboSettings;
+    @ImportantField
+    @ConfigField("messages")
+    private MessagesConfiguration messages;
 
     public PluginConfig(Plugin plugin) {
         this.configuration = saveDefaultConfiguration(plugin);
@@ -33,13 +37,17 @@ public class PluginConfig {
         return limboSettings;
     }
 
+    public MessagesConfiguration getMessages() {
+        return messages;
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }
 
     private Configuration saveDefaultConfiguration(Plugin plugin) {
         try {
-            if(!plugin.getDataFolder().exists())
+            if (!plugin.getDataFolder().exists())
                 plugin.getDataFolder().mkdir();
             File configurationFile = new File(plugin.getDataFolder(), "config.yml");
             if (!configurationFile.exists()) {
