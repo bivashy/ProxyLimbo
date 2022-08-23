@@ -1,7 +1,7 @@
 package com.ubivashka.limbo.bungee.commmand;
 
 import com.ubivashka.limbo.bungee.BungeeProxyLimbo;
-import com.ubivashka.limbo.bungee.server.BungeeLimboServer;
+import com.ubivashka.limbo.server.LimboServer;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import revxrsal.commands.annotation.Command;
@@ -19,14 +19,14 @@ public class LimboCommand {
 
     @CommandPermission("limbo.send.another")
     @Subcommand("send")
-    public void send(ProxiedPlayer player, BungeeLimboServer limboServer) {
+    public void send(ProxiedPlayer player, LimboServer limboServer) {
         limboServer.connect(plugin.fetchLimboPlayer(player));
         throw new SendMessageException(plugin.getConfig().getMessages().getMessage(SUCCESSFULLY_CONNECTED));
     }
 
     @CommandPermission("limbo.send")
     @Subcommand("send")
-    public void send(CommandActor actor, ProxiedPlayer player, BungeeLimboServer limboServer) {
+    public void send(CommandActor actor, ProxiedPlayer player, LimboServer limboServer) {
         limboServer.connect(plugin.fetchLimboPlayer(player));
         throw new SendMessageException(plugin.getConfig().getMessages().getMessage(SUCCESSFULLY_CONNECTED));
     }
