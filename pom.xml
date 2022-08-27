@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ubivashka.limbo.ProxyLimbo</groupId>
     <artifactId>main</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
     <properties>
         <!-- Manifest -->
@@ -18,7 +18,7 @@
 
         <!-- Dependencies -->
         <core.version>${project.version}</core.version>
-        <protocolize.version>2.2.1</protocolize.version>
+        <protocolize.version>2.2.2</protocolize.version>
 
         <!-- Maven plugins -->
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
