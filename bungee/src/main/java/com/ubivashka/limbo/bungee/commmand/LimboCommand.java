@@ -17,8 +17,8 @@ public class LimboCommand {
     @Dependency
     private BungeeProxyLimbo plugin;
 
-    @CommandPermission("limbo.send.another")
-    @Subcommand("send")
+    @CommandPermission("limbo.connect")
+    @Subcommand("connect")
     public void send(ProxiedPlayer player, LimboServer limboServer) {
         limboServer.connect(plugin.fetchLimboPlayer(player));
         throw new SendMessageException(plugin.getConfig().getMessages().getMessage(SUCCESSFULLY_CONNECTED));
