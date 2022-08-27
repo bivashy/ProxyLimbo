@@ -6,7 +6,6 @@ import com.ubivashka.limbo.protocol.nbt.registry.dimension.Dimension.Type;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.DimensionRegistry.DimensionRegistryEntry;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.codec.DimensionCodec;
 import com.ubivashka.limbo.protocol.packet.UpdatePlayerPositionPacket;
-import com.ubivashka.limbo.server.LimboServer;
 import com.ubivashka.limbo.server.LimboServer.LimboServerBuilder;
 
 public class BungeeLimboServerBuilder implements LimboServerBuilder {
@@ -21,8 +20,8 @@ public class BungeeLimboServerBuilder implements LimboServerBuilder {
     public BungeeLimboServerBuilder withSettings(LimboSettings settings) {
         withDimensionCodec(settings.getDimensionCodec());
         withDimensionRegistryEntry(settings.getDimensionSettings().getDimensionRegistryEntry());
-        withName(name);
-        withGamemode(gamemode);
+        withName(settings.getName());
+        withGamemode((short) settings.getGamemode());
         withDimensionType(settings.getDimensionSettings().getType());
         withPositionUpdatePacket(settings.getCoordinateSettings().getPlayerPositionPacket());
         if (settings.getBrand() != null)
