@@ -82,7 +82,11 @@ public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
 
         if (object instanceof ProxiedPlayer) {
             ProxiedPlayer player = (ProxiedPlayer) object;
-            return findLimboPlayer(player.getUniqueId());
+            if (limboPlayers.containsKey(player.getUniqueId()))
+                return limboPlayers.get(player.getUniqueId());
+            LimboPlayer limboPlayer = new DefaultBungeeLimboPlayer(player);
+            limboPlayers.put(player.getUniqueId(), limboPlayer);
+            return limboPlayer;
         }
         return null;
     }
