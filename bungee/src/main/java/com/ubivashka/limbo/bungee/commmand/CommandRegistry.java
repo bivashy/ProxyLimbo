@@ -1,5 +1,7 @@
 package com.ubivashka.limbo.bungee.commmand;
 
+import java.util.stream.Collectors;
+
 import com.ubivashka.limbo.bungee.BungeeProxyLimbo;
 import com.ubivashka.limbo.bungee.commmand.exception.ExceptionAdapter;
 import com.ubivashka.limbo.server.LimboServer;
@@ -24,6 +26,10 @@ public class CommandRegistry {
         commandHandler.registerValueResolver(LimboServer.class, context -> plugin.getLimboServerContainer()
                 .findFirst(server -> server.getName().equals(context.popForParameter()))
                 .orElseThrow(() -> new SendMessageException(plugin.getConfig().getMessages().getMessage(LIMBO_NOT_FOUND))));
+        commandHandler.getAutoCompleter()
+                .registerParameterSuggestions(LimboServer.class,
+                        (list, commandActor, executableCommand) -> plugin.getLimboServerContainer().map(LimboServer::getName).collect(
+                                Collectors.toList()));
         commandHandler.register(new LimboCommand());
     }
 }
