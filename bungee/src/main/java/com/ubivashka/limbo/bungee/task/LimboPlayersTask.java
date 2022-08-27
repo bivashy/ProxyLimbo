@@ -7,7 +7,7 @@ import com.ubivashka.limbo.player.LimboPlayer;
 
 import net.md_5.bungee.protocol.packet.KeepAlive;
 
-public class LimboPlayersTask implements Runnable{
+public class LimboPlayersTask implements Runnable {
     private final BungeeProxyLimbo plugin;
 
     public LimboPlayersTask(BungeeProxyLimbo plugin) {

@@ -35,12 +35,14 @@ import net.md_5.bungee.netty.ChannelWrapper;
 import net.md_5.bungee.protocol.packet.GameState;
 import net.md_5.bungee.protocol.packet.PluginMessage;
 import se.llbit.nbt.NamedTag;
+import se.llbit.nbt.SpecificTag;
+import se.llbit.nbt.Tag;
 
 public class BungeeLimboServer extends ServerConnection implements LimboServer {
     public static final String BRAND_TAG = "minecraft:brand";
     private final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(10);
-    private final Map<Integer, NamedTag> dimensionCodecNBTMap = new HashMap<>();
-    private final Map<Integer, NamedTag> dimensionEntryNBTMap = new HashMap<>();
+    private final Map<Integer, SpecificTag> dimensionCodecNBTMap = new HashMap<>();
+    private final Map<Integer, SpecificTag> dimensionEntryNBTMap = new HashMap<>();
     private final DimensionCodec dimensionCodec;
     private final DimensionRegistryEntry dimensionEntry;
     private final Dimension.Type dimensionType;
@@ -63,7 +65,6 @@ public class BungeeLimboServer extends ServerConnection implements LimboServer {
     public void connect(LimboPlayer player) {
         player.setConnecting(true);
         player.setCurrentLimbo(this);
-
         UserConnection userConnection = (UserConnection) player.as(BungeeLimboPlayer.class).getPlayer();
         getInfo().addPlayer(userConnection);
 
@@ -71,16 +72,16 @@ public class BungeeLimboServer extends ServerConnection implements LimboServer {
             userConnection.getServer().setObsolete(true);
             userConnection.getServer().getCh().close();
         }
+
         userConnection.setServer(this);
         EXECUTOR_SERVICE.execute(() -> {
             int entityId = player.getEntityId();
             int protocolVersion = player.getProtocolVersion();
 
-
-            NamedTag dimensionCodecTag = dimensionCodecNBTMap.computeIfAbsent(protocolVersion,
-                    key -> new NamedTag("", BungeeTagAdapter.adapt(dimensionCodec.asTag(protocolVersion))));
-            NamedTag dimensionTag = dimensionEntryNBTMap.computeIfAbsent(protocolVersion,
-                    key -> new NamedTag("", BungeeTagAdapter.adapt(dimensionEntry.getElement().asTag(protocolVersion))));
+            Tag dimensionCodecTag = new NamedTag("", dimensionCodecNBTMap.computeIfAbsent(protocolVersion,
+                    key -> BungeeTagAdapter.adapt(dimensionCodec.asTag(protocolVersion))));
+            Tag dimensionTag = new NamedTag("", dimensionEntryNBTMap.computeIfAbsent(protocolVersion,
+                    key -> BungeeTagAdapter.adapt(dimensionEntry.getElement().asTag(protocolVersion))));
             String dimensionName = dimensionEntry.getName();
 
             Object dimensionObject = dimensionTag;

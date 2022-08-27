@@ -21,7 +21,7 @@ limbo:
     # Default spawn coordinates
     coordinates:
       x: 0.
-      y: 0
+      y: 257 # More than 256, because 1.18.2+ will be stuck at "Loading terrain..."
       z: 0
       yaw: 0
       pitch: 0
@@ -35,5 +35,5 @@ messages:
   limbo-not-found: '&cЛимбо сервер с данным названием не найден!'
   successfully-connected: '&aУспешная отправка в лимбо!'
   usage: | 
-    &a/limbo send (limbo-name) (player) permission: limbo.send.other
-    &a/limbo send (limbo-name)          permission: limbo.send
+    &a/limbo send (limbo-name) (player) permission: limbo.send
+    &a/limbo connect (limbo-name)          permission: limbo.connect

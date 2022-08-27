@@ -46,7 +46,7 @@ public class BungeeProxyLimbo extends Plugin implements ProxyLimbo, Listener {
         Protocolize.protocolRegistration()
                 .registerPacket(UpdatePlayerPositionPacket.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, UpdatePlayerPositionPacket.class);
 
-        Executors.newScheduledThreadPool(1).scheduleWithFixedDelay(new LimboPlayersTask(this), 5, 5, TimeUnit.SECONDS);
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new LimboPlayersTask(this), 5, 5, TimeUnit.SECONDS);
         new CommandRegistry(this);
     }
 

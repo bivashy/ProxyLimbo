@@ -3,7 +3,7 @@ package com.ubivashka.limbo.bungee.packet;
 import java.util.Set;
 
 import net.md_5.bungee.protocol.packet.Login;
-import se.llbit.nbt.NamedTag;
+import se.llbit.nbt.Tag;
 
 public class LoginPacketBuilder {
     private int entityId;
@@ -12,7 +12,7 @@ public class LoginPacketBuilder {
     private String levelType;
     private Set<String> dimensionNames;
     private String dimensionName;
-    private NamedTag dimensionCodec;
+    private Tag dimensionCodec;
     private Object dimension;
 
     public LoginPacketBuilder withEntityId(int entityId) {
@@ -45,7 +45,7 @@ public class LoginPacketBuilder {
         return this;
     }
 
-    public LoginPacketBuilder withDimensionCodec(NamedTag dimensionCodec) {
+    public LoginPacketBuilder withDimensionCodec(Tag dimensionCodec) {
         this.dimensionCodec = dimensionCodec;
         return this;
     }
