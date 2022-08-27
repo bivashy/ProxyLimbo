@@ -10,9 +10,9 @@ import com.ubivashka.limbo.protocol.nbt.registry.biome.Biome.Type;
 import com.ubivashka.limbo.protocol.nbt.registry.biome.BiomeRegistry.BiomeRegistryEntry;
 
 public class BiomeSettings implements ConfigurationHolder {
-    @ConfigField("category")
+    @ConfigField
     private Biome.Category category = Category.PLAINS;
-    @ConfigField("type")
+    @ConfigField
     private Biome.Type type = Type.PLAINS;
     private final BiomeRegistryEntry biomeRegistryEntry;
 

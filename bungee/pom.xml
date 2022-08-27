@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <configuration.library.version>3.0.4</configuration.library.version>
+        <configuration.library.version>3.0.5</configuration.library.version>
         <lamp.version>3.0.8</lamp.version>
         <bungeecord.version>1.19-R0.1-SNAPSHOT</bungeecord.version>
         <bungeecord.proxy.version>-12e4514813-1</bungeecord.proxy.version>

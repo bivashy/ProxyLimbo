@@ -7,16 +7,10 @@ import com.ubivashka.limbo.bungee.config.PluginConfig;
 import com.ubivashka.limbo.protocol.packet.UpdatePlayerPositionPacket;
 
 public class CoordinateSettings implements ConfigurationHolder {
-    @ConfigField("x")
-    private double x;
-    @ConfigField("y")
-    private double y;
-    @ConfigField("z")
-    private double z;
-    @ConfigField("yaw")
-    private float yaw;
-    @ConfigField("pitch")
-    private float pitch;
+    @ConfigField
+    private double x, y, z;
+    @ConfigField
+    private float yaw, pitch;
 
     private final UpdatePlayerPositionPacket playerPositionPacket;
 

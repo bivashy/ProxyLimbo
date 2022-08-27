@@ -10,9 +10,9 @@ import com.ubivashka.limbo.protocol.nbt.registry.dimension.Dimension.Type;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.DimensionRegistry.DimensionRegistryEntry;
 
 public class DimensionSettings implements ConfigurationHolder {
-    @ConfigField("name")
+    @ConfigField
     private String name = "limbo-dimension";
-    @ConfigField("type")
+    @ConfigField
     private Dimension.Type type = Type.OVERWORLD;
     @ConfigField("fixed-time")
     private Long fixedTime;

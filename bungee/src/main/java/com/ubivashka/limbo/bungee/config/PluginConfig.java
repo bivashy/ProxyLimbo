@@ -25,7 +25,7 @@ public class PluginConfig {
     @ConfigField("limbo")
     private List<LimboSettings> limboSettings;
     @ImportantField
-    @ConfigField("messages")
+    @ConfigField
     private MessagesConfiguration messages;
 
     public PluginConfig(Plugin plugin) {

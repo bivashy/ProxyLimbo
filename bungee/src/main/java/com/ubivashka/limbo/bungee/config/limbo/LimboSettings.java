@@ -21,9 +21,9 @@ import com.ubivashka.limbo.protocol.nbt.registry.dimension.DimensionRegistry;
 import com.ubivashka.limbo.protocol.nbt.registry.dimension.codec.DimensionCodec;
 
 public class LimboSettings implements ConfigurationHolder {
-    @ConfigField("gamemode")
+    @ConfigField
     private int gamemode = 2;
-    @ConfigField("brand")
+    @ConfigField
     private String brand = "limbo";
     @ConfigField("coordinates")
     private CoordinateSettings coordinateSettings = new CoordinateSettings(0d, 0d, 0d, 0f, 0f);
@@ -47,7 +47,7 @@ public class LimboSettings implements ConfigurationHolder {
         ChatRegistry chatRegistry = new ChatRegistry(new ChatRegistryEntry(ChatSystem.NAME, 0, new ChatSystem()),
                 new ChatRegistryEntry(ChatGameInfo.NAME, 1, new ChatGameInfo()));
 
-        this.name = sectionHolder.key();
+        name = sectionHolder.key();
         dimensionCodec = new DimensionCodec(dimensionRegistry, biomeRegistry, chatRegistry);
         limboServer = new BungeeLimboServerBuilder().withSettings(this).build();
         ProxyLimbo.instance().getLimboServerContainer().add(limboServer);
