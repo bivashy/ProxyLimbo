@@ -1,4 +1,7 @@
-# ProxyLimbo
+# ~~ProxyLimbo~~ (deprecated)
+
+# Consider using [NanoLimbo](https://github.com/Nan1t/NanoLimbo)!
+
 Limbo plugin for minecraft proxy servers
 
 ### Maven:
